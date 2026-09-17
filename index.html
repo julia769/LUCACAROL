@@ -1,0 +1,1574 @@
+<!DOCTYPE html> 
+<html lang="pt-BR"> 
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Sala do Futuro | Ensino Médio</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --anil: #312e81;
+        --anil-dark: #1e1b4b;
+        --anil-light: #4338ca;
+        --blue: #38bdf8;
+        --blue-light: #7dd3fc;
+        --white: #ffffff;
+        --bg: #f4f8ff;
+        --text: #172554;
+        --muted: #64748b;
+        --border: #dbeafe;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    /* =========================
+       PARTÍCULAS
+    ========================== */
+
+    #particles {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================== */
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        padding: 25px 15px;
+        color: white;
+        background:
+            linear-gradient(
+                160deg,
+                #1e1b4b 0%,
+                #312e81 55%,
+                #3730a3 100%
+            );
+        box-shadow: 8px 0 30px rgba(30, 27, 75, .15);
+        z-index: 10;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px;
+        margin-bottom: 42px;
+    }
+
+    .logo-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 23px;
+        background: linear-gradient(
+            135deg,
+            #38bdf8,
+            #6366f1
+        );
+        box-shadow: 0 0 25px rgba(56, 189, 248, .35);
+    }
+
+    .logo h2 {
+        font-size: 17px;
+        color: white;
+    }
+
+    .logo p {
+        color: #bfdbfe;
+        font-size: 11px;
+        margin-top: 3px;
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .menu button {
+        width: 100%;
+        padding: 13px 15px;
+        background: transparent;
+        border: none;
+        border-radius: 10px;
+        color: #c7d2fe;
+        text-align: left;
+        cursor: pointer;
+        font-size: 14px;
+        transition: .25s;
+    }
+
+    .menu button:hover {
+        background: rgba(255,255,255,.09);
+        color: white;
+        transform: translateX(3px);
+    }
+
+    .menu button.active {
+        background: linear-gradient(
+            90deg,
+            rgba(56,189,248,.22),
+            rgba(99,102,241,.25)
+        );
+        color: white;
+        border-left: 3px solid var(--blue);
+        box-shadow: 0 8px 25px rgba(0,0,0,.1);
+    }
+
+    .profile {
+        position: absolute;
+        left: 15px;
+        right: 15px;
+        bottom: 20px;
+        padding: 12px;
+        background: rgba(255,255,255,.08);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(
+            135deg,
+            #38bdf8,
+            #6366f1
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    .profile strong {
+        font-size: 13px;
+    }
+
+    .profile span {
+        display: block;
+        color: #bfdbfe;
+        font-size: 11px;
+        margin-top: 3px;
+    }
+
+    /* =========================
+       MAIN
+    ========================== */
+
+    .main {
+        margin-left: 250px;
+        min-height: 100vh;
+    }
+
+    .header {
+        height: 70px;
+        background: rgba(255,255,255,.88);
+        backdrop-filter: blur(15px);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 35px;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+    }
+
+    .header h1 {
+        font-size: 20px;
+        color: var(--anil-dark);
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .online {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #0891b2;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .online-dot {
+        width: 8px;
+        height: 8px;
+        background: #22c55e;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #22c55e;
+    }
+
+    .notification {
+        width: 38px;
+        height: 38px;
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        background: white;
+        cursor: pointer;
+        font-size: 16px;
+        transition: .2s;
+    }
+
+    .notification:hover {
+        transform: scale(1.06);
+        box-shadow: 0 8px 20px rgba(49,46,129,.12);
+    }
+
+    .content {
+        padding: 35px;
+        max-width: 1500px;
+        margin: auto;
+    }
+
+    /* =========================
+       WELCOME
+    ========================== */
+
+    .welcome {
+        margin-bottom: 30px;
+    }
+
+    .welcome h2 {
+        font-size: 29px;
+        margin-bottom: 8px;
+        color: var(--anil-dark);
+    }
+
+    .welcome p {
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    /* =========================
+       STATS
+    ========================== */
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-bottom: 25px;
+    }
+
+    .stat {
+        background: rgba(255,255,255,.92);
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 10px 35px rgba(30,64,175,.06);
+        transition: .25s;
+    }
+
+    .stat:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(49,46,129,.1);
+    }
+
+    .stat-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .stat h3 {
+        font-size: 27px;
+        margin-bottom: 5px;
+        color: var(--anil);
+    }
+
+    .stat p {
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .stat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        background: linear-gradient(
+            135deg,
+            #e0f2fe,
+            #eef2ff
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+        border: 1px solid #dbeafe;
+    }
+
+    /* =========================
+       GRID
+    ========================== */
+
+    .grid {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 20px;
+    }
+
+    .card {
+        background: rgba(255,255,255,.94);
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        padding: 22px;
+        box-shadow: 0 10px 35px rgba(30,64,175,.06);
+    }
+
+    .card-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .card-title h3 {
+        font-size: 16px;
+        color: var(--anil-dark);
+    }
+
+    .card-title button {
+        background: transparent;
+        border: none;
+        color: var(--anil-light);
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    /* =========================
+       TASK
+    ========================== */
+
+    .task {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 15px 0;
+        border-bottom: 1px solid #eef2ff;
+    }
+
+    .task:last-child {
+        border-bottom: none;
+    }
+
+    .task-icon {
+        width: 43px;
+        height: 43px;
+        background: linear-gradient(
+            135deg,
+            #e0f2fe,
+            #eef2ff
+        );
+        border-radius: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+    }
+
+    .task-info {
+        flex: 1;
+    }
+
+    .task-info strong {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 5px;
+        color: #1e293b;
+    }
+
+    .task-info small {
+        color: var(--muted);
+        font-size: 11px;
+    }
+
+    .badge {
+        padding: 5px 9px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .pending {
+        background: #e0f2fe;
+        color: #0369a1;
+    }
+
+    .completed {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .execute {
+        background: linear-gradient(
+            135deg,
+            var(--anil-light),
+            var(--anil)
+        );
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: bold;
+        transition: .2s;
+        box-shadow: 0 5px 15px rgba(49,46,129,.2);
+    }
+
+    .execute:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(49,46,129,.3);
+    }
+
+    /* =========================
+       AGENTE
+    ========================== */
+
+    .agent {
+        background:
+            radial-gradient(
+                circle at top right,
+                rgba(56,189,248,.3),
+                transparent 35%
+            ),
+            linear-gradient(
+                145deg,
+                #1e1b4b,
+                #312e81,
+                #3730a3
+            );
+        color: white;
+        border: none;
+        box-shadow:
+            0 15px 45px rgba(49,46,129,.22);
+    }
+
+    .agent-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .agent-icon {
+        width: 46px;
+        height: 46px;
+        background: rgba(255,255,255,.12);
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        box-shadow: 0 0 25px rgba(56,189,248,.15);
+    }
+
+    .agent-header h3 {
+        font-size: 16px;
+    }
+
+    .agent-header small {
+        display: block;
+        color: #bae6fd;
+        margin-top: 4px;
+        font-size: 11px;
+    }
+
+    .agent-message {
+        background: rgba(255,255,255,.09);
+        border: 1px solid rgba(255,255,255,.08);
+        padding: 15px;
+        border-radius: 11px;
+        font-size: 13px;
+        line-height: 1.6;
+        min-height: 120px;
+        margin-bottom: 15px;
+    }
+
+    .agent-input {
+        display: flex;
+        gap: 7px;
+    }
+
+    .agent-input input {
+        flex: 1;
+        min-width: 0;
+        background: rgba(255,255,255,.1);
+        border: 1px solid rgba(255,255,255,.15);
+        outline: none;
+        color: white;
+        padding: 11px;
+        border-radius: 8px;
+    }
+
+    .agent-input input::placeholder {
+        color: #bae6fd;
+    }
+
+    .agent-input button {
+        width: 43px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(
+            135deg,
+            #ffffff,
+            #e0f2fe
+        );
+        color: var(--anil);
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    /* =========================
+       PROGRESSO
+    ========================== */
+
+    .progress {
+        margin-top: 20px;
+    }
+
+    .progress-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 9px;
+        font-size: 12px;
+    }
+
+    .progress-top span:last-child {
+        color: var(--anil-light);
+        font-weight: bold;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 9px;
+        background: #e0e7ff;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        width: 72%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            #312e81,
+            #38bdf8
+        );
+        border-radius: 20px;
+        box-shadow: 0 0 12px rgba(56,189,248,.3);
+    }
+
+    .progress-numbers {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .progress-numbers strong {
+        display: block;
+        font-size: 19px;
+        color: var(--anil);
+    }
+
+    .progress-numbers span {
+        color: var(--muted);
+        font-size: 10px;
+    }
+
+    /* =========================
+       MODAL
+    ========================== */
+
+    .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(15,23,42,.65);
+        backdrop-filter: blur(5px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        padding: 20px;
+    }
+
+    .modal.show {
+        display: flex;
+    }
+
+    .modal-box {
+        width: 100%;
+        max-width: 470px;
+        background: white;
+        border-radius: 17px;
+        padding: 26px;
+        box-shadow: 0 25px 80px rgba(0,0,0,.25);
+    }
+
+    .modal-box h2 {
+        font-size: 20px;
+        color: var(--anil-dark);
+        margin-bottom: 10px;
+    }
+
+    .modal-box p {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .modal-progress {
+        margin: 22px 0;
+    }
+
+    .modal-bar {
+        height: 9px;
+        background: #e0e7ff;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .modal-bar div {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(
+            90deg,
+            var(--anil),
+            var(--blue)
+        );
+        transition: width .4s;
+    }
+
+    .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .close {
+        padding: 9px 15px;
+        border: none;
+        background: #e0e7ff;
+        color: var(--anil);
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    /* =========================
+       RESPONSIVO
+    ========================== */
+
+    @media (max-width: 1050px) {
+
+        .stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 700px) {
+
+        .sidebar {
+            width: 70px;
+            padding: 20px 8px;
+        }
+
+        .logo {
+            justify-content: center;
+            padding: 0;
+        }
+
+        .logo > div:last-child {
+            display: none;
+        }
+
+        .menu button {
+            text-align: center;
+            font-size: 19px;
+        }
+
+        .menu button span {
+            display: none;
+        }
+
+        .profile {
+            justify-content: center;
+        }
+
+        .profile > div:last-child {
+            display: none;
+        }
+
+        .main {
+            margin-left: 70px;
+        }
+
+        .header {
+            padding: 0 18px;
+        }
+
+        .content {
+            padding: 25px 15px;
+        }
+
+        .stats {
+            grid-template-columns: 1fr;
+        }
+
+        .online {
+            display: none;
+        }
+
+        .task {
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: none;
+        }
+    }
+</style>
+
+</head> <body>
+<!-- PARTÍCULAS -->
+<canvas id="particles"></canvas>
+
+<!-- =========================
+     MENU
+========================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🎓
+        </div>
+
+        <div>
+            <h2>Sala do Futuro</h2>
+            <p>Ensino Médio</p>
+        </div>
+
+    </div>
+
+    <nav class="menu">
+
+        <button class="active">
+            🏠 <span>Início</span>
+        </button>
+
+        <button onclick="mostrarMensagem('Minhas tarefas')">
+            📋 <span>Minhas tarefas</span>
+        </button>
+
+        <button onclick="focarAgente()">
+            🤖 <span>Agente IA</span>
+        </button>
+
+        <button onclick="mostrarProgresso()">
+            📊 <span>Meu progresso</span>
+        </button>
+
+        <button onclick="mostrarMensagem('Configurações')">
+            ⚙️ <span>Configurações</span>
+        </button>
+
+    </nav>
+
+    <div class="profile">
+
+        <div class="avatar">
+            A
+        </div>
+
+        <div>
+            <strong>Aluno</strong>
+            <span>Ensino Médio</span>
+        </div>
+
+    </div>
+
+</aside>
+
+<!-- =========================
+     MAIN
+========================== -->
+
+<main class="main">
+
+    <header class="header">
+
+        <h1>Dashboard</h1>
+
+        <div class="header-right">
+
+            <div class="online">
+                <div class="online-dot"></div>
+                Agente online
+            </div>
+
+            <button class="notification">
+                🔔
+            </button>
+
+        </div>
+
+    </header>
+
+    <section class="content">
+
+        <div class="welcome">
+
+            <h2>Olá, aluno! 👋</h2>
+
+            <p>
+                Organize suas tarefas do Ensino Médio e utilize o agente para auxiliar nas atividades.
+            </p>
+
+        </div>
+
+        <!-- ESTATÍSTICAS -->
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <div>
+                        <h3>25</h3>
+                        <p>Tarefas encontradas</p>
+                    </div>
+
+                    <div class="stat-icon">
+                        📋
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <div>
+                        <h3>18</h3>
+                        <p>Tarefas concluídas</p>
+                    </div>
+
+                    <div class="stat-icon">
+                        ✅
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <div>
+                        <h3>7</h3>
+                        <p>Tarefas pendentes</p>
+                    </div>
+
+                    <div class="stat-icon">
+                        ⏳
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-top">
+
+                    <div>
+                        <h3>72%</h3>
+                        <p>Progresso geral</p>
+                    </div>
+
+                    <div class="stat-icon">
+                        📈
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- CONTEÚDO -->
+
+        <div class="grid">
+
+            <!-- TAREFAS -->
+
+            <div class="card">
+
+                <div class="card-title">
+
+                    <h3>📋 Tarefas recentes</h3>
+
+                    <button>
+                        Ver todas →
+                    </button>
+
+                </div>
+
+                <div class="task">
+
+                    <div class="task-icon">
+                        📐
+                    </div>
+
+                    <div class="task-info">
+
+                        <strong>
+                            Função do 2º grau
+                        </strong>
+
+                        <small>
+                            Matemática • 2º ano
+                        </small>
+
+                    </div>
+
+                    <span class="badge pending">
+                        Pendente
+                    </span>
+
+                    <button
+                        class="execute"
+                        onclick="executarTarefa('Função do 2º grau')">
+                        Executar
+                    </button>
+
+                </div>
+
+                <div class="task">
+
+                    <div class="task-icon">
+                        🧪
+                    </div>
+
+                    <div class="task-info">
+
+                        <strong>
+                            Reações químicas
+                        </strong>
+
+                        <small>
+                            Química • 2º ano
+                        </small>
+
+                    </div>
+
+                    <span class="badge pending">
+                        Pendente
+                    </span>
+
+                    <button
+                        class="execute"
+                        onclick="executarTarefa('Reações químicas')">
+                        Executar
+                    </button>
+
+                </div>
+
+                <div class="task">
+
+                    <div class="task-icon">
+                        📚
+                    </div>
+
+                    <div class="task-info">
+
+                        <strong>
+                            Interpretação de texto
+                        </strong>
+
+                        <small>
+                            Português • 1º ano
+                        </small>
+
+                    </div>
+
+                    <span class="badge completed">
+                        Concluída
+                    </span>
+
+                </div>
+
+                <div class="task">
+
+                    <div class="task-icon">
+                        🔬
+                    </div>
+
+                    <div class="task-info">
+
+                        <strong>
+                            Leis de Newton
+                        </strong>
+
+                        <small>
+                            Física • 1º ano
+                        </small>
+
+                    </div>
+
+                    <span class="badge pending">
+                        Pendente
+                    </span>
+
+                    <button
+                        class="execute"
+                        onclick="executarTarefa('Leis de Newton')">
+                        Executar
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- COLUNA DIREITA -->
+
+            <div>
+
+                <!-- AGENTE -->
+
+                <div class="card agent" id="agent">
+
+                    <div class="agent-header">
+
+                        <div class="agent-icon">
+                            🤖
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Agente Sala do Futuro
+                            </h3>
+
+                            <small>
+                                Inteligência artificial online
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="agent-message" id="agentMessage">
+
+                        Olá! 👋
+
+                        <br><br>
+
+                        Sou o agente da Sala do Futuro.
+                        Posso analisar suas tarefas e auxiliar
+                        na execução das atividades.
+
+                        <br><br>
+
+                        O que você precisa fazer?
+
+                    </div>
+
+                    <div class="agent-input">
+
+                        <input
+                            id="command"
+                            type="text"
+                            placeholder="Digite um comando..."
+                            onkeydown="enterCommand(event)"
+                        >
+
+                        <button onclick="enviarComando()">
+                            ➤
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- PROGRESSO -->
+
+                <div class="card progress" id="progress">
+
+                    <div class="card-title">
+
+                        <h3>
+                            📊 Seu progresso
+                        </h3>
+
+                    </div>
+
+                    <div class="progress-top">
+
+                        <span>
+                            Atividades concluídas
+                        </span>
+
+                        <span>
+                            72%
+                        </span>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div class="progress-fill"></div>
+
+                    </div>
+
+                    <div class="progress-numbers">
+
+                        <div>
+                            <strong>18</strong>
+                            <span>Concluídas</span>
+                        </div>
+
+                        <div>
+                            <strong>7</strong>
+                            <span>Pendentes</span>
+                        </div>
+
+                        <div>
+                            <strong>25</strong>
+                            <span>Total</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- =========================
+     MODAL
+========================== -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <h2 id="modalTitle">
+            🤖 Executando tarefa
+        </h2>
+
+        <p id="modalText">
+            O agente está analisando a atividade.
+        </p>
+
+        <div class="modal-progress">
+
+            <div class="modal-bar">
+                <div id="modalBar"></div>
+            </div>
+
+        </div>
+
+        <div class="modal-actions">
+
+            <button
+                class="close"
+                onclick="fecharModal()">
+                Fechar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================
+     JAVASCRIPT
+========================== -->
+
+<script>
+
+    /* =====================================
+       PARTÍCULAS AZUL-CLARO
+    ====================================== */
+
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+
+    let particles = [];
+
+    function resizeCanvas() {
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+    }
+
+    resizeCanvas();
+
+    window.addEventListener("resize", resizeCanvas);
+
+    class Particle {
+
+        constructor() {
+
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+
+            this.size =
+                Math.random() * 2.2 + .5;
+
+            this.speedX =
+                (Math.random() - .5) * .35;
+
+            this.speedY =
+                (Math.random() - .5) * .35;
+
+            this.opacity =
+                Math.random() * .45 + .15;
+
+        }
+
+        update() {
+
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x < 0)
+                this.x = canvas.width;
+
+            if (this.x > canvas.width)
+                this.x = 0;
+
+            if (this.y < 0)
+                this.y = canvas.height;
+
+            if (this.y > canvas.height)
+                this.y = 0;
+
+        }
+
+        draw() {
+
+            ctx.beginPath();
+
+            ctx.arc(
+                this.x,
+                this.y,
+                this.size,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                `rgba(56,189,248,${this.opacity})`;
+
+            ctx.fill();
+
+        }
+
+    }
+
+    function createParticles() {
+
+        particles = [];
+
+        const amount =
+            Math.min(
+                110,
+                Math.floor(
+                    window.innerWidth / 11
+                )
+            );
+
+        for (let i = 0; i < amount; i++) {
+
+            particles.push(
+                new Particle()
+            );
+
+        }
+
+    }
+
+    createParticles();
+
+    function animateParticles() {
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        particles.forEach(particle => {
+
+            particle.update();
+            particle.draw();
+
+        });
+
+        requestAnimationFrame(
+            animateParticles
+        );
+
+    }
+
+    animateParticles();
+
+    /* =====================================
+       EXECUTAR TAREFA
+    ====================================== */
+
+    function executarTarefa(nome) {
+
+        const modal =
+            document.getElementById("modal");
+
+        const title =
+            document.getElementById("modalTitle");
+
+        const text =
+            document.getElementById("modalText");
+
+        const bar =
+            document.getElementById("modalBar");
+
+        modal.classList.add("show");
+
+        title.innerText =
+            "🤖 Executando tarefa";
+
+        bar.style.width = "0%";
+
+        text.innerHTML = `
+            O agente está iniciando a tarefa
+            <strong>${nome}</strong>...
+        `;
+
+        setTimeout(() => {
+
+            bar.style.width = "25%";
+
+            text.innerHTML = `
+                🔎 Identificando o conteúdo da atividade...
+            `;
+
+        }, 700);
+
+        setTimeout(() => {
+
+            bar.style.width = "50%";
+
+            text.innerHTML = `
+                🧠 Analisando as questões...
+            `;
+
+        }, 1400);
+
+        setTimeout(() => {
+
+            bar.style.width = "75%";
+
+            text.innerHTML = `
+                ⚙️ Processando a atividade...
+            `;
+
+        }, 2100);
+
+        setTimeout(() => {
+
+            bar.style.width = "100%";
+
+            text.innerHTML = `
+                ✅ <strong>${nome}</strong> foi processada
+                pelo agente.
+                <br><br>
+                A automação poderá ser conectada
+                ao backend posteriormente.
+            `;
+
+        }, 3000);
+
+    }
+
+    /* =====================================
+       FECHAR MODAL
+    ====================================== */
+
+    function fecharModal() {
+
+        document
+            .getElementById("modal")
+            .classList.remove("show");
+
+    }
+
+    /* =====================================
+       AGENTE
+    ====================================== */
+
+    function enviarComando() {
+
+        const input =
+            document.getElementById("command");
+
+        const message =
+            document.getElementById("agentMessage");
+
+        const command =
+            input.value.trim();
+
+        if (!command)
+            return;
+
+        message.innerHTML = `
+            👤 <strong>Você:</strong>
+            ${command}
+
+            <br><br>
+
+            🤖 <strong>Agente:</strong>
+            Entendi. Estou analisando sua solicitação...
+        `;
+
+        input.value = "";
+
+        setTimeout(() => {
+
+            message.innerHTML += `
+                <br><br>
+                🔎 Procurando a tarefa correspondente...
+            `;
+
+        }, 1000);
+
+        setTimeout(() => {
+
+            message.innerHTML += `
+                <br><br>
+                ⚙️ Preparando a execução...
+            `;
+
+        }, 2000);
+
+    }
+
+    function enterCommand(event) {
+
+        if (event.key === "Enter") {
+
+            enviarComando();
+
+        }
+
+    }
+
+    /* =====================================
+       NAVEGAÇÃO
+    ====================================== */
+
+    function focarAgente() {
+
+        document
+            .getElementById("agent")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+    }
+
+    function mostrarProgresso() {
+
+        document
+            .getElementById("progress")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+    }
+
+    function mostrarMensagem(texto) {
+
+        const message =
+            document.getElementById("agentMessage");
+
+        message.innerHTML = `
+            🤖 <strong>${texto}</strong>
+
+            <br><br>
+
+            Esta seção está sendo preparada
+            para uma próxima versão do projeto.
+        `;
+
+    }
+
+    /* =====================================
+       FECHAR MODAL CLICANDO FORA
+    ====================================== */
+
+    document
+        .getElementById("modal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (event.target === this) {
+
+                    fecharModal();
+
+                }
+
+            }
+        );
+
+</script>
